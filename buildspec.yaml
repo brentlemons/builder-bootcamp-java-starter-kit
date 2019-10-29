@@ -1,0 +1,16 @@
+version: 0.1
+# brent lemons 20191028
+
+phases:
+  build:
+    commands:
+      - chmod +x gradlew
+      - ./gradlew build
+  post_build:
+    commands:
+      - aws cloudformation package --output-template-file dev-packaged.yaml --template-file cloudformation.yaml --s3-bucket builder-bootcamp-java-starter-brent
+
+artifacts:
+  files:
+    - dev-packaged.yaml
+  discard-paths: yes
