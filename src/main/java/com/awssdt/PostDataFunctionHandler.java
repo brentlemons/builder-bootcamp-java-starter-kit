@@ -3,7 +3,7 @@ package com.awssdt;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
-public class GetDataFunctionHandler implements RequestHandler<Object, Object> {
+public class PostDataFunctionHandler implements RequestHandler<Object, Object> {
 
     @Override
     public Object handleRequest(Object apigwInput, Context context) {
