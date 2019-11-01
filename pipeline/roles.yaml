@@ -51,7 +51,7 @@ Resources:
           Principal:
             Service:
             - codepipeline.amazonaws.com
-#            - cloudformation.amazonaws.com
+            - cloudformation.amazonaws.com
           Sid: 1
 #      Path: /
 #      ManagedPolicyArns:

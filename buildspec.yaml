@@ -8,9 +8,9 @@ phases:
       - ./gradlew build
   post_build:
     commands:
-      - aws cloudformation package --output-template-file dev-packaged.yaml --template-file cloudformation.yaml --s3-bucket builder-bootcamp-java-starter-brent
+      - aws cloudformation package --output-template-file outputtemplate.yaml --template-file template.yaml --s3-bucket bkl-test-starter
 
 artifacts:
   files:
-    - dev-packaged.yaml
+    - outputtemplate.yaml
   discard-paths: yes
