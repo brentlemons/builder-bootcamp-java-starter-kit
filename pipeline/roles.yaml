@@ -75,6 +75,11 @@ Resources:
                 - s3:PutObject
               Resource: !Sub 'arn:aws:s3:::${ArtifactBucketName}/*'
               Effect: Allow
+            - Action:
+                - dynamodb:*
+                - iam:*
+              Resource: '*'
+              Effect: Allow
 #            - Action:
 #                - elasticbeanstalk:*
 #                - ec2:*
@@ -112,8 +117,13 @@ Resources:
               Resource: '*'
               Effect: Allow
             - Action:
+                - lambda:AddPermission
+                - lambda:CreateFunction
+                - lambda:DeleteFunction
+                - lambda:GetFunctionConfiguration
                 - lambda:InvokeFunction
                 - lambda:ListFunctions
+                - lambda:RemovePermission
               Resource: '*'
               Effect: Allow
             - Action:
@@ -122,6 +132,13 @@ Resources:
                 - codecommit:UploadArchive
                 - codecommit:GetUploadArchiveStatus
                 - codecommit:CancelUploadArchive
+              Resource: '*'
+              Effect: Allow
+            - Action:
+                - apigateway:DELETE
+                - apigateway:GET
+                - apigateway:PATCH
+                - apigateway:POST
               Resource: '*'
               Effect: Allow
             - Action:

@@ -59,7 +59,7 @@ Resources:
       TimeoutInMinutes: 5
       Environment:
         Type: LINUX_CONTAINER
-        Image: "aws/codebuild/java:openjdk-11"
+        Image: "aws/codebuild/java:openjdk-8"
         ComputeType: BUILD_GENERAL1_SMALL
 #        EnvironmentVariables:
 #          - Name: S3BUCKET
