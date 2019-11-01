@@ -7,4 +7,24 @@ Resources:
   IamRoles:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/bkl-test-starter/739ccf82258bd3d970eafabb090cf7cf.template
+      TemplateURL: https://s3.amazonaws.com/bkl-test-starter/df4a80bf771bfe0eb435cd71a54a669e.template
+  CodePipeline:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/bkl-test-starter/c64294b867cd22d3ef4459ee23ccac71.template
+      Parameters:
+        ArtifactBucketName:
+          Fn::GetAtt:
+          - IamRoles
+          - Outputs.ArtifactBucketName
+        CodePipelineServiceRoleArn:
+          Fn::GetAtt:
+          - IamRoles
+          - Outputs.CodePipelineServiceRoleArn
+        CodeBuildServiceRoleArn:
+          Fn::GetAtt:
+          - IamRoles
+          - Outputs.CodeBuildServiceRoleArn
+        CodeCommitRepositoryName:
+          Ref: CodeCommitRepoName
+        CodeCommitBranchName: master

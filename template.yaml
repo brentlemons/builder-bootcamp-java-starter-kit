@@ -1,0 +1,72 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: 'builder-bootcamp-java-starter-kit'
+
+Globals:
+  Function:
+    Runtime: java11
+    Timeout: 300
+
+Resources:
+  GetLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/builder-bootcamp-java-starter-kit-1.0.0.zip
+      Handler: com.awssdt.GetDataFunctionHandler
+      Events:
+        GetData:
+          Type: Api
+          Properties:
+            Path: /data/{data}
+            Method: GET
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: 'data-table'
+            
+#    Properties:
+#      CodeUri: build/distributions/gribProcessor-0.0.1-SNAPSHOT.zip
+#      Description: ''
+#      MemorySize: 3008
+#      Handler: com.awssdt.GetDataFunctionHandler
+##      Role: !GetAtt DefaultRole.Arn
+##      Tags:
+##        environment: !Ref StageName
+#      Events:
+#        GribBucketEvent:
+#          Type: S3
+#          Properties:
+#            Bucket: !Ref GribSourceBucket
+#            Events:
+#              - 's3:ObjectCreated:*'
+
+#  PostLambdaFunction:
+#    Type: AWS::Serverless::Function
+#    Properties:
+#      CodeUri: ./dist
+#      Handler: post.handler
+#      Runtime: nodejs8.10
+#      Events:
+#        PostData:
+#          Type: Api
+#          Properties:
+#            Path: /data
+#            Method: POST
+#      Policies:
+#        - DynamoDBCrudPolicy:
+#            TableName: 'data-table'
+
+  DataTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        -
+          AttributeName: "data"
+          AttributeType: "S"
+      KeySchema:
+        -
+          AttributeName: "data"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: "5"
+        WriteCapacityUnits: "5"
+      TableName: "data-table"

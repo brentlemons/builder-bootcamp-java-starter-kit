@@ -24,29 +24,29 @@ Parameters:
     Description: Where this pipeline should get source from.
 
 Resources:
-  TestStep:
-    Type: AWS::CodeBuild::Project
-    Properties:
-      Name: !Sub "${AWS::StackName}-test"
-      Artifacts:
-        Type: CODEPIPELINE
-      Description: Builds the output artifacts
-      TimeoutInMinutes: 5
-      Environment:
-        ComputeType: BUILD_GENERAL1_LARGE
-        Image: "aws/codebuild/java:openjdk-8-1.6.0"
-        Type: LINUX_CONTAINER
-      ServiceRole: !Ref CodeBuildServiceRoleArn
-      Source:
-        Type: CODEPIPELINE
-        BuildSpec: >
-                  version: 0.2
-
-                  phases:
-                    build:
-                      commands:
-                        - npm install
-                        - make test
+#  TestStep:
+#    Type: AWS::CodeBuild::Project
+#    Properties:
+#      Name: !Sub "${AWS::StackName}-test"
+#      Artifacts:
+#        Type: CODEPIPELINE
+#      Description: Builds the output artifacts
+#      TimeoutInMinutes: 5
+#      Environment:
+#        ComputeType: BUILD_GENERAL1_LARGE
+#        Image: "aws/codebuild/java:openjdk-8-1.6.0"
+#        Type: LINUX_CONTAINER
+#      ServiceRole: !Ref CodeBuildServiceRoleArn
+#      Source:
+#        Type: CODEPIPELINE
+#        BuildSpec: >
+#                  version: 0.2
+#
+#                  phases:
+#                    build:
+#                      commands:
+#                        - npm install
+#                        - make test
 
   BuildStep:
     Type: AWS::CodeBuild::Project
@@ -54,32 +54,33 @@ Resources:
       Name: !Sub "${AWS::StackName}-build"
       Artifacts:
         Type: CODEPIPELINE
+        Name: !Sub "${AWS::StackName}-build"
       Description: Builds the output artifacts
       TimeoutInMinutes: 5
       Environment:
-        ComputeType: BUILD_GENERAL1_LARGE
-        Image: "aws/codebuild/nodejs:8.11.0"
         Type: LINUX_CONTAINER
-        EnvironmentVariables:
-          - Name: S3BUCKET
-            Value: !Ref ArtifactBucketName
+        Image: "aws/codebuild/java:openjdk-11"
+        ComputeType: BUILD_GENERAL1_SMALL
+#        EnvironmentVariables:
+#          - Name: S3BUCKET
+#            Value: !Ref ArtifactBucketName
       ServiceRole: !Ref CodeBuildServiceRoleArn
       Source:
         Type: CODEPIPELINE
-        BuildSpec: !Sub >
-                  version: 0.2
-
-                  phases:
-                    build:
-                      commands:
-                        - npm install
-                        - make build
-                        - aws cloudformation package --template-file template.yaml --s3-bucket $S3BUCKET --output-template-file outputtemplate.yaml
-                  artifacts:
-                    type: zip
-                    files:
-                      - template.yaml
-                      - outputtemplate.yaml
+#        BuildSpec: !Sub >
+#                  version: 0.2
+#
+#                  phases:
+#                    build:
+#                      commands:
+#                        - npm install
+#                        - make build
+#                        - aws cloudformation package --template-file template.yaml --s3-bucket $S3BUCKET --output-template-file outputtemplate.yaml
+#                  artifacts:
+#                    type: zip
+#                    files:
+#                      - template.yaml
+#                      - outputtemplate.yaml
 
   CodePipeline:
     Type: AWS::CodePipeline::Pipeline
@@ -106,18 +107,18 @@ Resources:
             OutputArtifacts:
             - Name: SourceArtifact
 
-        - Name: Test
-          Actions:
-          - Name: Test
-            ActionTypeId:
-              Category: Build
-              Owner: AWS
-              Provider: CodeBuild
-              Version: '1'
-            Configuration:
-              ProjectName: !Ref TestStep
-            InputArtifacts:
-              - Name: SourceArtifact
+#        - Name: Test
+#          Actions:
+#          - Name: Test
+#            ActionTypeId:
+#              Category: Build
+#              Owner: AWS
+#              Provider: CodeBuild
+#              Version: '1'
+#            Configuration:
+#              ProjectName: !Ref TestStep
+#            InputArtifacts:
+#              - Name: SourceArtifact
 
         - Name: Build
           Actions:
