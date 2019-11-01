@@ -1,0 +1,10 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template describing the service infrastructure
+Parameters:
+  CodeCommitRepoName:
+    Type: String
+Resources:
+  IamRoles:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/bkl-test-starter/739ccf82258bd3d970eafabb090cf7cf.template
