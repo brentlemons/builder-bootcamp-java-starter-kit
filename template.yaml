@@ -4,7 +4,7 @@ Description: 'builder-bootcamp-java-starter-kit'
 
 Globals:
   Function:
-    Runtime: java11
+    Runtime: java8
     Timeout: 300
 
 Resources:

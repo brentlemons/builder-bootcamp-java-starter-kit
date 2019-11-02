@@ -1,4 +1,4 @@
-package com.awssdt;
+package com.awssdt.function;
 
 import java.io.IOException;
 
