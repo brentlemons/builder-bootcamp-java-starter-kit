@@ -141,6 +141,7 @@ Resources:
                 - apigateway:GET
                 - apigateway:PATCH
                 - apigateway:POST
+                - apigateway:PUT
               Resource: '*'
               Effect: Allow
             - Action:
