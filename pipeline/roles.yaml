@@ -124,6 +124,8 @@ Resources:
                 - lambda:InvokeFunction
                 - lambda:ListFunctions
                 - lambda:RemovePermission
+                - lambda:UpdateFunctionCode
+                - lambda:UpdateFunctionConfiguration
               Resource: '*'
               Effect: Allow
             - Action:
